@@ -83,6 +83,33 @@
                                 name="password_confirmation" required />
             </div>
 
+            <!-- Group Select Code -->
+            <div class="mt-4">
+                <x-label for="group_code" :value="__('Grupo')" /> 
+
+                <select id="group_code" class="block mt-1 w-full bg-white bg-opacity-40 rounded-md shadow-md border-gray-300 focus:border-gray-300 focus:ring focus:ring-blue-700 focus:ring-opacity-50 transition duration-300" 
+                        name="group_code"
+                        type="text" 
+                        required>
+
+                    <option value="1" selected>FP-A</option>
+                    <option value="2">FP-B</option>
+                    <option value="3">FP-C</option>
+                    <option value="4">FP-D</option>
+                    <option value="5">FP-E</option>
+                </select>
+            </div>
+
+            <!-- Group Password -->
+            <div class="mt-4">
+                <x-label for="group_password" :value="__('Contraseña del Grupo')" />
+
+                <x-input id="group_password" class="block mt-1 w-full"
+                                type="password"
+                                name="group_password"
+                                required autocomplete="new-password" />
+            </div>
+
             <div class="flex items-center justify-between mt-4">
                 <a class="underline text-sm text-gray-800 hover:text-gray-900" href="{{ route('login') }}">
                     {{ __('¿Ya tienes cuenta? Inicia sesión aquí.') }}

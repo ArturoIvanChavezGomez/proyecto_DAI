@@ -50,4 +50,9 @@ class User extends Authenticatable
     public function groups(){
         return $this->belongsToMany('App\Models\Group');
     }
+
+    /* //Relacion muchos a muchos polimorfica
+    public function groups(){
+        return $this->morphToMany('App\Models\Groups', 'group_user');
+    } */
 }

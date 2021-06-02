@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\Group;
+use App\Http\Controllers\Auth\DB;
 use App\Providers\RouteServiceProvider;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\Request;
@@ -44,6 +46,7 @@ class RegisteredUserController extends Controller
             'maternal_name' => 'required|string|max:50',
             'email' => 'required|string|email|max:100|unique:users',
             'password' => 'required|string|confirmed|min:8',
+            'group_password' => 'required|max:10',
         ]);
 
         Auth::login($user = User::create([
@@ -55,11 +58,31 @@ class RegisteredUserController extends Controller
             'password' => Hash::make($request->password),
         ]));
 
-        // LaraTrust line for getting the kind of user
-        $user->attachRole($request->role_id);
+        if($user->attachRole($request->role_id) == "student"){
+            $groups = Group::all();
 
-        event(new Registered($user));
+            $group = $groups->find($request->group_code);
 
-        return redirect(RouteServiceProvider::HOME);
+            if($request->group_password == $group->group_password) {
+
+                event(new Registered($user));
+
+                $user->groups()->attach($request->group_code);
+
+                return redirect(RouteServiceProvider::HOME);
+
+            } else {
+
+                return view("auth.register");
+
+            }
+
+        } else {
+
+            event(new Registered($user));
+            return redirect(RouteServiceProvider::HOME);
+            
+
+        } 
     }
 }

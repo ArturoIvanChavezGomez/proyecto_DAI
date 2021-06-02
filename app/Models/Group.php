@@ -14,5 +14,10 @@ class Group extends Model
         return $this->belongsToMany('App\Models\User');
     }
 
+    /* //Relación muchos a muchos polimorfica
+    public function users(){
+        return $this->morphedByMany('App\Models\User', 'group_user');
+    } */
+
     
 }
